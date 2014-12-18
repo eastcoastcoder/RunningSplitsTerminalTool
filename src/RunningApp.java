@@ -18,7 +18,9 @@ public class RunningApp {
 		calc.setTotalTime(cin.next());
 		cin.close();
 		
-		calc.calcIndividualLap();
+		calc.calcLapTime();
+		calc.calcLapSeconds();
+		
 		System.out.println("Each lap will be: " + calc.getLapTime() + " or " + calc.getLapSeconds() + "s.");
 		calc.lapPrinter();
 	}
