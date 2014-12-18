@@ -11,10 +11,10 @@ public class RunningApp {
 		System.out.print("Enter Distance: ");
 		calc.setDistance(cin.nextInt());
 		calc.calcLaps();
-		System.out.println("Laps: " + calc.getLaps());
+		System.out.println("Laps: " + calc.getNumberLaps());
 		
 		System.out.println("Enter a time (XX:XX): ");
-		calc.setTime(cin.next());
+		calc.setTotalTime(cin.next());
 		cin.close();
 		
 		System.out.println("Each lap will be: " + calc.calcIndividualLap() + ".");
