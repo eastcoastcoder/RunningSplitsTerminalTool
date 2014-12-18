@@ -14,7 +14,7 @@ public class RunningApp {
 		calc.calcNumberLaps();
 		System.out.println("Laps: " + calc.getNumberLaps());
 		
-		System.out.println("Enter a time (XX:XX): ");
+		System.out.print("Enter a time (XX:XX): ");
 		calc.setTotalTime(cin.next());
 		cin.close();
 		

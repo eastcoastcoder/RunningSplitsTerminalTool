@@ -35,11 +35,13 @@ class RunningModel {
 	public void lapPrinter(){
 		int remaining = getLapSeconds();
 		
-		for(int i = 1; i < getNumberLaps(); i++){
+		for(int i = 1; i <= getNumberLaps(); i++){
 			System.out.println("Lap " + i + ": " + formatTime(remaining));
 			remaining += getLapSeconds();
 		}
-		System.out.println("Lap " + getNumberLaps() + ": " + getTotalTime());
+		
+		if (getTotalSeconds() - (remaining-getLapSeconds()) != 0)
+			System.out.println("Spare: " + (getTotalSeconds() - (remaining-getLapSeconds())) + "s");
 	}
 	
 	private String formatTime(int totalTime){
