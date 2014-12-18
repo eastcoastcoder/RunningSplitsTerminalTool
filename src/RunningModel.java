@@ -54,7 +54,7 @@ class RunningModel {
 	private String formatTime(int totalTime){
 		int formattedMinutes = totalTime/60;
 		int formattedSeconds = totalTime%60;
-		return formattedMinutes + ":" + formattedSeconds;
+		return formattedMinutes + ":" + String.format("%02d", formattedSeconds);
 	}
 	
 	
