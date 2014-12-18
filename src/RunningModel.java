@@ -2,16 +2,17 @@
 class RunningModel {
 	
 	private String lapTime, totalTime;
-	private int numLaps, distance, trackSize, totalSeconds, lapSeconds;
+	private int trackSize, distance, numLaps, lapSeconds, totalSeconds, spareSeconds;
 	
 	//Accessors
+	public String getLapTime(){ return lapTime; }
+	public String getTotalTime(){ return totalTime; }
 	public int getTrackSize(){ return trackSize; }
 	public int getDistance(){ return distance; }
 	public int getNumberLaps(){ return numLaps; }
 	public int getLapSeconds(){ return lapSeconds; }
 	public int getTotalSeconds(){ return totalSeconds; }
-	public String getLapTime(){ return lapTime; }
-	public String getTotalTime(){ return totalTime; }
+	public int getSpareSeconds(){ return spareSeconds; }
 	
 	//Mutators
 	public void setTrackSize(int trackSize){ this.trackSize = trackSize; }
@@ -36,6 +37,10 @@ class RunningModel {
 		lapTime = formatTime(getLapSeconds());
 	}
 	
+	public void calcSpare(int remaining){
+		spareSeconds = getTotalSeconds() - (remaining-getLapSeconds());
+	}
+	
 	public void lapPrinter(){
 		int remaining = getLapSeconds();
 		
@@ -44,8 +49,9 @@ class RunningModel {
 			remaining += getLapSeconds();
 		}
 		
-		if (getTotalSeconds() - (remaining-getLapSeconds()) != 0)
-			System.out.println("Spare: " + (getTotalSeconds() - (remaining-getLapSeconds())) + "s");
+		calcSpare(remaining);
+		if (getSpareSeconds() != 0)
+			System.out.println("Spare: " + getSpareSeconds() + "s");
 	}
 	
 	//Private Methods
@@ -54,6 +60,5 @@ class RunningModel {
 		int formattedSeconds = totalTime%60;
 		return formattedMinutes + ":" + String.format("%02d", formattedSeconds);
 	}
-	
 	
 }
