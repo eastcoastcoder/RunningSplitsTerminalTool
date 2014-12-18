@@ -24,19 +24,10 @@ class RunningModel {
 	}
 
 	public void calcIndividualLap(){
-		int minutes = 0, 
-			seconds = 0;
-
-		if (getTotalTime().charAt(1) == ':'){
-			//X:XX Format
-			minutes = Integer.parseInt(String.valueOf(getTotalTime().charAt(0)));
-			seconds = Integer.parseInt(String.valueOf(getTotalTime().charAt(2) + String.valueOf(getTotalTime().charAt(3))));
-		} else if (getTotalTime().charAt(2) == ':'){
-			//XX:XX Format
-			minutes = Integer.parseInt(String.valueOf(getTotalTime().charAt(0) + String.valueOf(getTotalTime().charAt(1))));
-			seconds = Integer.parseInt(String.valueOf(getTotalTime().charAt(3) + String.valueOf(getTotalTime().charAt(4))));
-		}
-	
+		String[] timeParts = getTotalTime().split(":");
+		int minutes = Integer.parseInt(timeParts[0]);
+		int seconds = Integer.parseInt(timeParts[1]);
+		
 		totalSeconds = (minutes*60)+seconds;
 		lapTime = getTotalSeconds()/getNumberLaps();
 	}
