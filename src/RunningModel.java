@@ -16,17 +16,12 @@ class RunningModel {
 	public void setTrackSize(int trackSize){ this.trackSize = trackSize; }
 	public void setTime(String time){ this.time = time; }
 	public void setDistance(int distance){ this.distance = distance; }
+	
+	//Public Methods
 	public void calcLaps(){
 		laps = getDistance()/getTrackSize();
 	}
-	public void calcLapTime(){ 
-		lapTime = getRawTime()/getLaps(); 
-	}
-	//rawTime is time completely in seconds
-	private void calcRawTime(int min, int sec){ 
-		rawTime = (min*60)+sec;
-	}
-		
+
 	public String calcIndividualLap(){
 		int minutes = 0, 
 			seconds = 0;
@@ -41,16 +36,9 @@ class RunningModel {
 			seconds = Integer.parseInt(String.valueOf(getTime().charAt(3) + String.valueOf(getTime().charAt(4))));
 		}
 	
-		calcRawTime(minutes, seconds);
+		calcRawTime(minutes, seconds);		//Total Time in Seconds
 		calcLapTime();
 		return formatEverything(getLapTime());
-	}
-	
-	
-	private String formatEverything(int totalTime){
-		int fixedMinutes = totalTime/60;
-		int fixedSeconds = totalTime%60;
-		return fixedMinutes + ":" + fixedSeconds;
 	}
 	
 	public void lapPrinter(){
@@ -61,6 +49,21 @@ class RunningModel {
 			remaining += getLapTime();
 		}
 		
+	}
+	
+	//Private Methods
+	private void calcRawTime(int min, int sec){ 
+		rawTime = (min*60)+sec;
+	}
+	
+	private void calcLapTime(){ 
+		lapTime = getRawTime()/getLaps(); 
+	}
+	
+	private String formatEverything(int totalTime){
+		int fixedMinutes = totalTime/60;
+		int fixedSeconds = totalTime%60;
+		return fixedMinutes + ":" + fixedSeconds;
 	}
 	
 	
