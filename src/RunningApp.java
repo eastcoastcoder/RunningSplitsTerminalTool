@@ -10,13 +10,14 @@ public class RunningApp {
 		calc.setTrackSize(cin.nextInt());
 		System.out.print("Enter Distance: ");
 		calc.setDistance(cin.nextInt());
-		System.out.println("Laps: " + calc.calcLaps());
+		calc.calcLaps();
+		System.out.println("Laps: " + calc.getLaps());
 		
 		System.out.println("Enter a time (XX:XX): ");
 		calc.setTime(cin.next());
 		cin.close();
 		
-		System.out.println("Each lap will be: " + calc.doMath() + ".");
+		System.out.println("Each lap will be: " + calc.calcIndividualLap() + ".");
 		calc.lapPrinter();
 	}
 }

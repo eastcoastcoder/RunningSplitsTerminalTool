@@ -1,34 +1,33 @@
 
 class RunningModel {
+	
 	private String time;
-	private int laps, distance, trackSize, rawTime;
+	private int laps, distance, trackSize, rawTime, lapTime;
 	
-	public void setTrackSize(int trackSize){ this.trackSize = trackSize; }
+	//Accessors
 	public int getTrackSize(){ return trackSize; }
-	
-	public void setTime(String time){ this.time = time; }
 	public String getTime(){ return time; }
-	
-	public void setDistance(int distance){ this.distance = distance; }
 	public int getDistance(){ return distance; }
-	
-	public int calcLaps(){
-		laps = getDistance()/getTrackSize();
-		return laps;
-	}
 	public int getLaps(){ return laps; }
+	public int getLapTime(){ return lapTime; }
+	public int getRawTime(){ return rawTime; }
 	
-	public int calcLapTime(){ 
-		return getRawTime()/getLaps(); 
+	//Mutators
+	public void setTrackSize(int trackSize){ this.trackSize = trackSize; }
+	public void setTime(String time){ this.time = time; }
+	public void setDistance(int distance){ this.distance = distance; }
+	public void calcLaps(){
+		laps = getDistance()/getTrackSize();
 	}
-	
+	public void calcLapTime(){ 
+		lapTime = getRawTime()/getLaps(); 
+	}
 	//rawTime is time completely in seconds
 	private void calcRawTime(int min, int sec){ 
 		rawTime = (min*60)+sec;
 	}
-	public int getRawTime(){ return rawTime; }
-	
-	public String doMath(){
+		
+	public String calcIndividualLap(){
 		int minutes = 0, 
 			seconds = 0;
 
@@ -43,8 +42,8 @@ class RunningModel {
 		}
 	
 		calcRawTime(minutes, seconds);
-
-		return formatEverything(calcLapTime());
+		calcLapTime();
+		return formatEverything(getLapTime());
 	}
 	
 	
@@ -55,11 +54,11 @@ class RunningModel {
 	}
 	
 	public void lapPrinter(){
-		int remaining = calcLapTime();
+		int remaining = getLapTime();
 		
 		for(int i = 1; i < getLaps()+1; i++){
 			System.out.println("Lap " + i + ": " + formatEverything(remaining));
-			remaining += calcLapTime();
+			remaining += getLapTime();
 		}
 		
 	}
