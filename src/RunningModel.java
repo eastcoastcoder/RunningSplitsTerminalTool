@@ -6,11 +6,12 @@ class RunningModel {
 	
 	//Accessors
 	public int getTrackSize(){ return trackSize; }
-	public String getTotalTime(){ return totalTime; }
 	public int getDistance(){ return distance; }
 	public int getNumberLaps(){ return numLaps; }
-	public int getLapTime(){ return lapTime; }
+	public int getLapSeconds(){ return lapTime; }
 	public int getTotalSeconds(){ return totalSeconds; }
+	public String getLapTime(){ return formatTime(getLapSeconds()); }
+	public String getTotalTime(){ return totalTime; }
 	
 	//Mutators
 	public void setTrackSize(int trackSize){ this.trackSize = trackSize; }
@@ -18,11 +19,11 @@ class RunningModel {
 	public void setDistance(int distance){ this.distance = distance; }
 	
 	//Public Methods
-	public void calcLaps(){
+	public void calcNumberLaps(){
 		numLaps = getDistance()/getTrackSize();
 	}
 
-	public String calcIndividualLap(){
+	public void calcIndividualLap(){
 		int minutes = 0, 
 			seconds = 0;
 
@@ -36,28 +37,18 @@ class RunningModel {
 			seconds = Integer.parseInt(String.valueOf(getTotalTime().charAt(3) + String.valueOf(getTotalTime().charAt(4))));
 		}
 	
-		calcTotalSeconds(minutes, seconds);	
-		calcLapTime();
-		return formatTime(getLapTime());
+		totalSeconds = (minutes*60)+seconds;
+		lapTime = getTotalSeconds()/getNumberLaps();
 	}
 	
 	public void lapPrinter(){
-		int remaining = getLapTime();
+		int remaining = getLapSeconds();
 		
 		for(int i = 1; i < getNumberLaps(); i++){
 			System.out.println("Lap " + i + ": " + formatTime(remaining));
-			remaining += getLapTime();
+			remaining += getLapSeconds();
 		}
 		System.out.println("Lap " + getNumberLaps() + ": " + getTotalTime());
-	}
-	
-	//Private Methods
-	private void calcTotalSeconds(int min, int sec){ 
-		totalSeconds = (min*60)+sec;
-	}
-	
-	private void calcLapTime(){ 
-		lapTime = getTotalSeconds()/getNumberLaps(); 
 	}
 	
 	private String formatTime(int totalTime){
