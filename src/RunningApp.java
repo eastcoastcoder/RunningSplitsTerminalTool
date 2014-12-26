@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 public class RunningApp {
 	public static void main(String[] args) {
 		RunningModel calc = new RunningModel();
@@ -11,17 +10,22 @@ public class RunningApp {
 		System.out.print("Enter Distance: ");
 		calc.setDistance(cin.nextInt());
 		
-		calc.calcNumberLaps();
 		System.out.println("Laps: " + calc.getNumberLaps());
 		
 		System.out.print("Enter a time (XX:XX): ");
 		calc.setTotalTime(cin.next());
 		cin.close();
-		
-		calc.calcLapSeconds();
-		calc.calcLapTime();
-		
+				
 		System.out.println("Each lap will be: " + calc.getLapTime() + " or " + calc.getLapSeconds() + "s.");
-		calc.lapPrinter();
+	
+		String times[] = calc.getLapTimesArray();
+		
+		for(int lapNum = 1; lapNum <= calc.getNumberLaps(); lapNum++)
+			System.out.println("Lap " + lapNum + ": " + times[lapNum-1]);
+		
+		if (calc.getSpareSeconds() != 0)
+			System.out.println("Spare: " + calc.getSpareSeconds() + "s");
+		
 	}
+		
 }

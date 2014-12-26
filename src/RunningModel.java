@@ -1,57 +1,50 @@
 
 class RunningModel {
 	
-	private String lapTime, totalTime;
-	private int trackSize, distance, numLaps, lapSeconds, totalSeconds, spareSeconds;
+	private String totalTime;
+	private String[] lapTimesArray;
+	private int trackSize, distance, remaining;
 	
-	//Accessors
-	public String getLapTime(){ return lapTime; }
-	public String getTotalTime(){ return totalTime; }
-	public int getTrackSize(){ return trackSize; }
-	public int getDistance(){ return distance; }
-	public int getNumberLaps(){ return numLaps; }
-	public int getLapSeconds(){ return lapSeconds; }
-	public int getTotalSeconds(){ return totalSeconds; }
-	public int getSpareSeconds(){ return spareSeconds; }
-	
+	//Public Methods
 	//Mutators
 	public void setTrackSize(int trackSize){ this.trackSize = trackSize; }
 	public void setDistance(int distance){ this.distance = distance; }
 	public void setTotalTime(String totalTime){ this.totalTime = totalTime; }
 	
-	//Public Methods
-	public void calcNumberLaps(){
-		numLaps = getDistance()/getTrackSize();
+	//Accessors	
+	public int getLapSeconds(){ 
+		return getTotalSeconds()/getNumberLaps();
 	}
 	
-	public void calcLapSeconds(){
-		String[] timeParts = getTotalTime().split(":");
+	public String getLapTime(){ 
+		return formatTime(getLapSeconds()); 
+	}
+	
+	public int getNumberLaps(){ 
+		return distance/trackSize; 
+	}
+	
+	public int getSpareSeconds(){
+		return getTotalSeconds() - (remaining-getLapSeconds());
+	}
+
+	public int getTotalSeconds(){
+		String[] timeParts = totalTime.split(":");
 		int minutes = Integer.parseInt(timeParts[0]);
 		int seconds = Integer.parseInt(timeParts[1]);
 		
-		totalSeconds = (minutes*60)+seconds;
-		lapSeconds = getTotalSeconds()/getNumberLaps();
+		return (minutes*60)+seconds;
 	}
 
-	public void calcLapTime(){
-		lapTime = formatTime(getLapSeconds());
-	}
-	
-	public void calcSpare(int remaining){
-		spareSeconds = getTotalSeconds() - (remaining-getLapSeconds());
-	}
-	
-	public void lapPrinter(){
-		int remaining = getLapSeconds();
-		
-		for(int i = 1; i <= getNumberLaps(); i++){
-			System.out.println("Lap " + i + ": " + formatTime(remaining));
+	public String[] getLapTimesArray(){
+		lapTimesArray = new String[getNumberLaps()];
+		remaining = getLapSeconds();
+
+		for(int i = 0; i < getNumberLaps(); i++){
+			lapTimesArray[i] = formatTime(remaining);
 			remaining += getLapSeconds();
 		}
-		
-		calcSpare(remaining);
-		if (getSpareSeconds() != 0)
-			System.out.println("Spare: " + getSpareSeconds() + "s");
+		return lapTimesArray;
 	}
 	
 	//Private Methods
@@ -60,5 +53,5 @@ class RunningModel {
 		int formattedSeconds = totalTime%60;
 		return formattedMinutes + ":" + String.format("%02d", formattedSeconds);
 	}
-	
+		
 }
